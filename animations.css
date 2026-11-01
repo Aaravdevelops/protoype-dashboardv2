@@ -1,0 +1,126 @@
+/* Dashboard V2 — animation utilities (separate from styles.css) */
+:root{
+  --motion-ease: cubic-bezier(.22,1,.36,1);
+  --motion-ease-spring: cubic-bezier(.34,1.56,.64,1);
+  --motion-dur-fast: .18s;
+  --motion-dur: .4s;
+  --motion-dur-slow: .7s;
+}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(12px)}
+  to{opacity:1;transform:none}
+}
+@keyframes riseIn{
+  from{opacity:0;transform:translateY(16px) rotate(-4deg) scale(.9)}
+  to{opacity:1;transform:none}
+}
+@keyframes panelIn{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:none}
+}
+@keyframes panelOut{
+  from{opacity:1;transform:none}
+  to{opacity:0;transform:translateY(-8px)}
+}
+@keyframes overlayIn{
+  from{opacity:0}
+  to{opacity:1}
+}
+@keyframes toastIn{
+  from{opacity:0;transform:translateY(14px) scale(.97)}
+  to{opacity:1;transform:none}
+}
+@keyframes sheen{
+  to{background-position:-220% 0}
+}
+@keyframes glow{
+  0%,100%{box-shadow:0 0 0 0 rgba(255,90,46,.35),0 0 24px rgba(255,90,46,.18)}
+  50%{box-shadow:0 0 0 8px rgba(255,90,46,0),0 0 44px rgba(255,90,46,.35)}
+}
+@keyframes floaty{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-6px)}
+}
+@keyframes chipPulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(255,90,46,.45)}
+  50%{box-shadow:0 0 0 7px rgba(255,90,46,0)}
+}
+@keyframes spin{
+  to{transform:rotate(360deg)}
+}
+@keyframes rip{
+  to{transform:scale(1);opacity:0}
+}
+@keyframes shimmer{
+  to{background-position:-220% 0}
+}
+@keyframes ddIn{
+  from{opacity:0;transform:translateY(-8px) scale(.985)}
+  to{opacity:1;transform:none}
+}
+@keyframes rowIn{
+  from{opacity:0;transform:translateX(-8px)}
+  to{opacity:1;transform:none}
+}
+@keyframes popIn{
+  from{opacity:0;transform:scale(.92)}
+  to{opacity:1;transform:scale(1)}
+}
+@keyframes slideLeft{
+  from{opacity:0;transform:translateX(16px)}
+  to{opacity:1;transform:none}
+}
+@keyframes slideRight{
+  from{opacity:0;transform:translateX(-16px)}
+  to{opacity:1;transform:none}
+}
+@keyframes pulseRing{
+  0%{transform:scale(.9);opacity:.7}
+  70%{transform:scale(1.18);opacity:0}
+  100%{transform:scale(1.18);opacity:0}
+}
+@keyframes orbDrift{
+  to{transform:translate(-6vw,8vh) scale(1.1)}
+}
+
+/* Utility classes */
+.fadeUp, .motion-fade-up, .anim-fadeUp{animation:fadeUp var(--motion-dur) var(--motion-ease) both}
+.riseIn, .motion-rise-in, .anim-riseIn{animation:riseIn var(--motion-dur-slow) var(--motion-ease) both}
+.panelIn, .motion-panel-in, .anim-panelIn{animation:panelIn var(--motion-dur) var(--motion-ease) both}
+.panelOut, .motion-panel-out, .anim-panelOut{animation:panelOut var(--motion-dur-fast) var(--motion-ease) forwards}
+.overlayIn, .motion-overlay-in, .anim-overlayIn{animation:overlayIn var(--motion-dur-fast) ease both}
+.toastIn, .motion-toast-in, .anim-toastIn{animation:toastIn var(--motion-dur) var(--motion-ease) both}
+.sheen, .motion-sheen, .anim-sheen{background-size:220% 100%;animation:sheen 3.4s linear infinite}
+.glow, .motion-glow, .anim-glow{animation:glow 2s ease-in-out infinite}
+.floaty, .motion-floaty, .anim-floaty{animation:floaty 4s ease-in-out infinite}
+.chipPulse, .motion-chip-pulse, .anim-chipPulse{animation:chipPulse 2.8s ease-in-out infinite}
+.spin, .motion-spin{animation:spin .8s linear infinite}
+.popIn, .motion-pop-in{animation:popIn .3s var(--motion-ease-spring) both}
+.slideLeft, .motion-slide-left{animation:slideLeft var(--motion-dur) var(--motion-ease) both}
+.slideRight, .motion-slide-right{animation:slideRight var(--motion-dur) var(--motion-ease) both}
+.stagger, .motion-stagger>*{animation:fadeUp var(--motion-dur) var(--motion-ease) both}
+
+/* motion.js fallback hooks */
+.motion-hero-reveal{animation:riseIn var(--motion-dur-slow) var(--motion-ease) both}
+.motion-stagger-in{animation:fadeUp var(--motion-dur) var(--motion-ease) both}
+.motion-card-hover{transition:transform .3s var(--motion-ease),box-shadow .3s var(--motion-ease)}
+.motion-card-hover:hover{transform:translateY(-6px) scale(1.015)}
+.motion-ripple{will-change:transform,opacity}
+.motion-rip-css{animation:rip .6s ease-out forwards}
+.motion-revealed{opacity:1;transform:none}
+.motion-count{font-variant-numeric:tabular-nums}
+
+/* reduced-motion gating */
+@media (prefers-reduced-motion: reduce){
+  .fadeUp,.riseIn,.panelIn,.panelOut,.overlayIn,.toastIn,.popIn,.slideLeft,.slideRight,
+  .motion-fade-up,.motion-rise-in,.motion-panel-in,.motion-panel-out,.motion-overlay-in,
+  .motion-toast-in,.motion-pop-in,.motion-slide-left,.motion-slide-right,
+  .motion-hero-reveal,.motion-stagger-in{animation:none !important;opacity:1;transform:none}
+  .sheen,.motion-sheen,.anim-sheen{animation:none !important}
+  .glow,.motion-glow,.anim-glow{animation:none !important}
+  .floaty,.motion-floaty,.anim-floaty{animation:none !important}
+  .chipPulse,.motion-chip-pulse,.anim-chipPulse{animation:none !important}
+  .spin,.motion-spin{animation:none !important}
+  .motion-card-hover:hover{transform:none !important}
+}

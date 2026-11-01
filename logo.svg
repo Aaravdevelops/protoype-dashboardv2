@@ -1,20 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="120" viewBox="0 0 640 120" role="img" aria-label="DASHBOARD V2">
-  <defs>
-    <linearGradient id="lg-ember" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#ff7a45"/>
-      <stop offset="55%" stop-color="#ff5a2e"/>
-      <stop offset="100%" stop-color="#e0451a"/>
-    </linearGradient>
-  </defs>
-  <g>
-    <path d="M60 6 L98 44 L60 82 L22 44 Z" fill="url(#lg-ember)"/>
-    <path d="M60 20 L80 40 L60 60 L40 40 Z" fill="#0d0b09"/>
-    <path d="M60 30 L72 42 L60 54 L48 42 Z" fill="#e6b34d"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 80" width="400" height="80" role="img" aria-label="DASHBOARD V2">
+  <g transform="translate(8 18)">
+    <path d="M22 2 L44 24 L22 44 L0 24 Z" fill="#ff5a2e"/>
+    <path d="M13 2 L3 14 H10 L9 22 L21 10 H14 Z" fill="#0d0b09" transform="translate(22 24) scale(1.45) translate(-12 -12)"/>
   </g>
-  <text x="128" y="84" font-family="'Unbounded', 'Arial Black', sans-serif" font-weight="800" font-size="58" letter-spacing="4" fill="#f2ece0">DASHBOARD</text>
-  <g transform="translate(452 18)">
-    <rect x="0" y="0" width="64" height="64" rx="14" fill="#ff5a2e"/>
-    <path d="M32 14 L50 32 L32 50 L14 32 Z" fill="#0d0b09"/>
-    <text x="32" y="42" text-anchor="middle" font-family="'Unbounded', sans-serif" font-weight="800" font-size="30" fill="#f2ece0">V</text>
-  </g>
+  <text x="56" y="49" font-family="Unbounded, 'Space Grotesk', sans-serif" font-weight="700" font-size="26" letter-spacing="0.06" fill="#f2ece0">DASHBOARD</text>
+  <text x="286" y="49" font-family="'Space Mono', monospace" font-weight="700" font-size="9" letter-spacing="0.16" fill="#e6b34d">V2</text>
 </svg>
