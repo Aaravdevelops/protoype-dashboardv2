@@ -2,7 +2,7 @@
 // Client-side only. No secrets. All network calls are wrapped in try/catch
 // and degrade to `false` (never throw, never produce false positives).
 
-export const CINEHD_BASE = "https://cinehd.cc";
+export const CINEHD_BASE = "https://cinehd.vc";
 
 const CANDIDATE_ENDPOINTS = (title) => [
   `${CINEHD_BASE}/api/movies?search=${enc(title)}`,

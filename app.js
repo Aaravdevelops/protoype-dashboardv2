@@ -17,7 +17,14 @@ const setOn = ui.setOn;
 const kill = ui.kill;
 const toast = ui.toast;
 const ago = ui.ago;
-const I = ui.I;
+const I = {
+  arrow: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg>',
+  play: '<svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.3v13.4L19 12z"/></svg>',
+  close: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 5l14 14M19 5L5 19"/></svg>',
+  star: '<svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4 6.1 20.5l1.2-6.5L2.5 9.4l6.6-.9z"/></svg>',
+  pin: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h12v18l-6-4.5L6 21z"/></svg>',
+  x: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 5l14 14M19 5L5 19"/></svg>',
+};
 
 const TMDB_KEY = tmdb.TMDB_KEY;
 const IMG = tmdb.IMG;
@@ -46,7 +53,7 @@ const ENGINES = [
   { id: "imdb", n: "IMDb", c: "STREAM", u: (q) => "https://www.imdb.com/find/?q=" + enc(q) },
   { id: "lb", n: "Letterboxd", c: "STREAM", u: (q) => "https://letterboxd.com/search/" + enc(q) + "/" },
   { id: "gcode", n: "Dev Dork", c: "CODE", u: (q) => "https://www.google.com/search?q=" + enc(q + " site:stackoverflow.com"), dk: (q) => q + " site:stackoverflow.com" },
-  { id: "ch", n: "CineHD", c: "STREAM", u: (q) => "https://cinehd.cc/search?q=" + enc(q) },
+  { id: "ch", n: "CineHD", c: "STREAM", u: (q) => "https://cinehd.vc/search?q=" + enc(q) },
 ];
 
 const INTERNALS = [

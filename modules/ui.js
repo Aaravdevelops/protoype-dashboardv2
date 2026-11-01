@@ -88,7 +88,7 @@ export function railHTML(title, year) {
     ["Reddit threads", "https://www.google.com/search?q=" + enc('site:reddit.com "' + title + '"'), 'site:reddit.com "' + esc(title) + '"'],
     ["Free / public domain", "https://archive.org/search?query=" + enc('"' + title + '"'), 'archive.org — "' + esc(title) + '"'],
     ["Video & trailers", "https://www.youtube.com/results?search_query=" + enc(title + (year ? " " + year : "")), "youtube — " + esc(title)],
-    ["Stream on CineHD", "https://cinehd.cc/search?q=" + enc(title), "cinehd.cc — " + esc(title) + " in HD"],
+    ["Stream on CineHD", "https://cinehd.vc/search?q=" + enc(title), "cinehd.vc — " + esc(title) + " in HD"],
   ];
   const out = [];
   for (let i = 0; i < cards.length; i++)
