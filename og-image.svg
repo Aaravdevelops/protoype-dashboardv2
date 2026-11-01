@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="DASHBOARD V2 - every film you love">
+  <defs>
+    <radialGradient id="emberGlow" cx="50%" cy="34%" r="65%">
+      <stop offset="0%" stop-color="#ff5a2e" stop-opacity="0.36"/>
+      <stop offset="38%" stop-color="#ff5a2e" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#ff5a2e" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="vignette" cx="50%" cy="46%" r="80%">
+      <stop offset="55%" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.6"/>
+    </radialGradient>
+    <linearGradient id="beam" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ff8a55" stop-opacity="0.20"/>
+      <stop offset="50%" stop-color="#ff5a2e" stop-opacity="0.05"/>
+      <stop offset="100%" stop-color="#ff5a2e" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="emberGlowFilter" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="9" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="#0d0b09"/>
+  <rect width="1200" height="630" fill="url(#emberGlow)"/>
+  <polygon points="580,0 485,630 605,630 700,0" fill="url(#beam)"/>
+
+  <path d="M0,615 L180,540 L360,600 L540,530 L720,598 L900,525 L1080,592 L1200,545 L1200,630 L0,630 Z" fill="#18110b"/>
+  <path d="M0,590 L140,505 L280,565 L430,480 L570,560 L720,470 L870,558 L1020,485 L1160,560 L1200,520 L1200,630 L0,630 Z" fill="#14100a"/>
+
+  <rect x="0" y="42" width="1200" height="58" fill="#150e09"/>
+  <circle cx="64" cy="71" r="6.5" fill="#0d0b09"/>
+  <circle cx="144" cy="71" r="6.5" fill="#0d0b09"/>
+  <circle cx="224" cy="71" r="6.5" fill="#0d0b09"/>
+  <circle cx="304" cy="71" r="6.5" fill="#0d0b09"/>
+  <circle cx="384" cy="71" r="6.5" fill="#0d0b09"/>
+  <circle cx="464" cy="71" r="6.5" fill="#0d0b09"/>
+  <circle cx="544" cy="71" r="6.5" fill="#0d0b09"/>
+  <circle cx="624" cy="71" r="6.5" fill="#0d0b09"/>
+  <circle cx="704" cy="71" r="6.5" fill="#0d0b09"/>
+  <circle cx="784" cy="71" r="6.5" fill="#0d0b09"/>
+  <circle cx="864" cy="71" r="6.5" fill="#0d0b09"/>
+  <circle cx="944" cy="71" r="6.5" fill="#0d0b09"/>
+  <circle cx="1024" cy="71" r="6.5" fill="#0d0b09"/>
+  <circle cx="1104" cy="71" r="6.5" fill="#0d0b09"/>
+  <circle cx="1184" cy="71" r="6.5" fill="#0d0b09"/>
+  <rect x="0" y="101" width="1200" height="2" fill="#ff5a2e" opacity="0.5"/>
+
+  <rect width="1200" height="630" fill="url(#vignette)"/>
+
+  <circle cx="180" cy="170" r="2" fill="#ff5a2e" opacity="0.55"/>
+  <circle cx="262" cy="118" r="1.6" fill="#ff5a2e" opacity="0.4"/>
+  <circle cx="952" cy="160" r="2" fill="#ff5a2e" opacity="0.5"/>
+  <circle cx="1040" cy="228" r="1.4" fill="#ff5a2e" opacity="0.35"/>
+  <circle cx="150" cy="330" r="1.6" fill="#ff5a2e" opacity="0.45"/>
+  <circle cx="1060" cy="330" r="2" fill="#ff5a2e" opacity="0.5"/>
+  <circle cx="830" cy="86" r="1.5" fill="#ff5a2e" opacity="0.4"/>
+  <circle cx="420" cy="96" r="1.3" fill="#ff5a2e" opacity="0.35"/>
+
+  <text x="600" y="266" text-anchor="middle" font-family="'Unbounded', 'Space Grotesk', 'Arial Black', sans-serif" font-weight="700" font-size="230" fill="#ff5a2e" filter="url(#emberGlowFilter)" letter-spacing="6">V2</text>
+  <text x="600" y="410" text-anchor="middle" font-family="'Unbounded', 'Space Grotesk', 'Arial Black', sans-serif" font-weight="700" font-size="150" fill="#f2ece0" letter-spacing="2">DASHBOARD</text>
+  <text x="600" y="540" text-anchor="middle" font-family="'Space Mono', monospace" font-size="27" letter-spacing="10" fill="#e6b34d">EVERY FILM YOU LOVE</text>
+</svg>
