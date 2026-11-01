@@ -2,7 +2,9 @@
 import * as storage from "./modules/storage.js";
 import * as tmdb from "./modules/tmdb.js";
 import * as ui from "./modules/ui.js";
-import { initMotion } from "./modules/motion.js";
+import {
+  initMotion, heroReveal, staggerIn, tabTransition, cardHover, ripple, countUp, respectsReducedMotion
+} from "./modules/motion.js";
 import * as cinehd from "./modules/cinehd.js";
 
 const $ = ui.$;
@@ -220,11 +222,23 @@ function moveInd() {
 
 const FOCUSMAP = { command: "#q", movies: "#mv-q", wiki: "#wk-q", news: "#nw-q", engines: "#en-q", translate: "#tr-in" };
 const booted = { movies: false, news: false };
+let wikiLang = "en";
+let newsLang = "en";
+ui.setNewsLang(newsLang);
 
-export function showTab(id) {
+export async function showTab(id) {
   const ps = $$(".panel"), bs = $$(".tabbtn");
-  for (let i = 0; i < ps.length; i++) setOn(ps[i], ps[i].id === "panel-" + id);
-  for (let i = 0; i < bs.length; i++) setOn(bs[i], bs[i].getAttribute("data-tab") === id);
+  const from = $$(".panel.on")[0] || null;
+  const to = $("#panel-" + id) || null;
+  if (!to) return;
+
+  if (!respectsReducedMotion()) {
+    await tabTransition(from, to);
+  } else {
+    for (let i = 0; i < ps.length; i++) setOn(ps[i], ps[i].id === "panel-" + id);
+    for (let i = 0; i < bs.length; i++) setOn(bs[i], bs[i].getAttribute("data-tab") === id);
+  }
+
   state.tab = id;
   moveInd();
   if (id === "movies" && !booted.movies) { booted.movies = true; loadTrending(); }
@@ -243,11 +257,6 @@ export function goTab(tab, q) {
   else if (tab === "translate") { $("#tr-in").value = q; $("#tr-count").textContent = q.length + " CHARS"; }
   else if (tab === "study") ui.preselectStudy(q);
 }
-
-let wikiLang = "en";
-let newsLang = "en";
-// keep ui newsLang in sync
-ui.setNewsLang(newsLang);
 
 function mvSkeletons(n) { ui.mvSkeletons(n); }
 function mvRender(items, q, avlMap) { ui.mvRender(items, q, avlMap); }
@@ -271,6 +280,13 @@ async function mvSearch(q) {
     const avl = {};
     res.forEach((x) => { if (x.ok) avl[x.t] = true; });
     mvRender(items, q, avl);
+
+    // Stagger-in animation for movie cards
+    if (!respectsReducedMotion()) {
+      await staggerIn("#mv-grid", ".card", 0.05);
+      const cards = $$("#mv-grid .card");
+      cards.forEach((c) => cardHover(c));
+    }
   } catch (err) {
     if (token === mvToken) { const g = $("#mv-grid"); if (g) g.innerHTML = ""; toast(err.message); }
   } finally {
@@ -288,6 +304,11 @@ function loadTrending() {
       chips.push('<button class="chip" data-s="' + esc(items[i].title || "") + '">' + esc(items[i].title || "") + '</button>');
     const chipsEl = $("#mv-chips");
     if (chipsEl) chipsEl.innerHTML = chips.join("");
+    // Animate trending cards
+    if (!respectsReducedMotion()) {
+      staggerIn("#mv-grid", ".card", 0.04);
+      $$("#mv-grid .card").forEach((c) => cardHover(c));
+    }
   }).catch((err) => { const g = $("#mv-grid"); if (g) g.innerHTML = ""; toast(err.message); });
 }
 
@@ -300,7 +321,6 @@ function openDetail(id, mt) {
 
 function renderEngines() {
   const q = (ui.enQuery || "").trim ? (ui.enQuery || "").trim() : "";
-  // use local enQuery state
   const cust = storage.getEngines();
   const out = [];
   for (let i = 0; i < cust.length; i++)
@@ -319,7 +339,6 @@ function renderEngines() {
 }
 
 let enQuery = "";
-// sync with ui.enQuery
 if (typeof window !== "undefined") {
   try { Object.defineProperty(window, "__enQuery", { get: () => enQuery, set: (v) => { enQuery = v; } }); } catch (e) {}
 }
@@ -344,10 +363,10 @@ function wire() {
     if (renderDD(!wasOpen)) openDD();
   });
   qEl.addEventListener("keydown", (ev) => { if (ev.key === "Enter") execCmd(); });
-  $("#go").addEventListener("click", execCmd);
+  $("#go").addEventListener("click", (ev) => { ripple(ev.currentTarget, ev); execCmd(); });
   $("#dd").addEventListener("mousedown", (ev) => { ev.preventDefault(); });
   $("#dd").addEventListener("click", (ev) => {
-    if (up(ev.target, "data-exec")) { execCmd(); return; }
+    if (up(ev.target, "data-exec")) { ripple(ev.currentTarget, ev); execCmd(); return; }
     const rq = up(ev.target, "data-rq");
     if (rq) { $("#q").value = rq.getAttribute("data-rq"); renderDD(false); openDD(); return; }
     const qv = $("#q").value.trim();
@@ -370,7 +389,7 @@ function wire() {
     if (!up(ev.target, "data-searchcol")) closeDD();
   });
 
-  $("#mv-go").addEventListener("click", () => mvSearch($("#mv-q").value));
+  $("#mv-go").addEventListener("click", (ev) => { ripple(ev.currentTarget, ev); mvSearch($("#mv-q").value); });
   $("#mv-q").addEventListener("keydown", (ev) => { if (ev.key === "Enter") mvSearch($("#mv-q").value); });
   $("#mv-chips").addEventListener("click", (ev) => {
     const c = up(ev.target, "data-s");
@@ -378,7 +397,7 @@ function wire() {
   });
   $("#mv-grid").addEventListener("click", (ev) => {
     const c = up(ev.target, "data-id");
-    if (c) openDetail(c.getAttribute("data-id"), c.getAttribute("data-mt"));
+    if (c) { ripple(ev.currentTarget, ev); openDetail(c.getAttribute("data-id"), c.getAttribute("data-mt")); }
   });
   $("#mv-grid").addEventListener("keydown", (ev) => {
     if (ev.key !== "Enter") return;
@@ -389,7 +408,6 @@ function wire() {
   $("#wk-lang").addEventListener("click", (ev) => {
     const b = up(ev.target, "data-wl"); if (!b) return;
     wikiLang = b.getAttribute("data-wl");
-    ui.setNewsLang; // noop placeholder
     const all = $$("#wk-lang button");
     for (let i = 0; i < all.length; i++) setOn(all[i], all[i] === b);
     const qv = $("#wk-q").value.trim();
@@ -401,7 +419,6 @@ function wire() {
     const b = up(ev.target, "data-wt");
     if (b) {
       const title = b.getAttribute("data-wt"), lang = b.getAttribute("data-wl");
-      // toggle wiki pin
       const pins = storage.getPins();
       let found = -1;
       for (let i = 0; i < pins.length; i++) if (pins[i].type === "wiki" && pins[i].title === title) { found = i; break; }
@@ -468,7 +485,6 @@ function wire() {
   $("#tr-in").addEventListener("input", function () {
     $("#tr-count").textContent = this.value.length + " CHARS · AUTO-CHUNKED EVERY 450";
   });
-  // translator run (inline logic)
   function chunkText(t, max) {
     const parts = t.match(/[^.!?\u0964\n]+[.!?\u0964]*\s*/g) || [t];
     const out = []; let cur = "";
@@ -520,7 +536,7 @@ function wire() {
     }
     step(0);
   }
-  $("#tr-go").addEventListener("click", trRun);
+  $("#tr-go").addEventListener("click", (ev) => { ripple(ev.currentTarget, ev); trRun(); });
   $("#tr-in").addEventListener("keydown", (ev) => { if (ev.key === "Enter" && (ev.ctrlKey || ev.metaKey)) trRun(); });
   $("#tr-copy").addEventListener("click", () => {
     const t = $("#tr-out").textContent;
@@ -627,8 +643,15 @@ function wire() {
 function init() {
   const overlay = $("#overlay");
   window.__overlay = overlay;
-  // ensure ui.closeOv references #overlay dynamically (it does)
-  initMotion();
+  initMotion().then(() => {
+    // Hero reveal on command center
+    if (!respectsReducedMotion()) {
+      heroReveal("#panel-command .cmd-kicker", { delay: 0.05, stagger: 0.08 });
+      heroReveal("#panel-command h1", { delay: 0.15, stagger: 0.06 });
+      heroReveal("#panel-command .glyph", { delay: 0.25 });
+      heroReveal("#panel-command .searchwrap", { delay: 0.35 });
+    }
+  });
   wire();
   ui.renderStudy();
   phTick();
