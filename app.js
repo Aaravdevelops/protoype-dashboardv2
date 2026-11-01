@@ -625,7 +625,6 @@ function wire() {
 }
 
 function init() {
-  ui.overlay = $("#overlay"); // not needed
   const overlay = $("#overlay");
   window.__overlay = overlay;
   // ensure ui.closeOv references #overlay dynamically (it does)
